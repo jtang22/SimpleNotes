@@ -3,23 +3,24 @@ package com.example.simplenotes;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<Cursor>{
 
-    private CursorAdapter cursorAdapter;
+    private static final int EDITOR_REQUEST_CODE = 1001;
+    private android.widget.CursorAdapter cursorAdapter;
 
     //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -31,11 +32,8 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         //Cursor cursor = getContentResolver().query(NotesProvider.CONTENT_URI,
         //        DBOpenHelper.ALL_COLUMNS, null, null, null, null);
 
-        String[] from = {DBOpenHelper.NOTE_TEXT};
-        int[] to = {R.id.tvNote};
 
-        cursorAdapter = new SimpleCursorAdapter(this,
-                R.layout.note_list_item, null, from, to, 0);
+        cursorAdapter = new NotesCursorAdapter(this, null, 0);
 
         ListView list = (ListView) findViewById(android.R.id.list);
         list.setAdapter(cursorAdapter);
@@ -126,5 +124,10 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
+    }
+
+    public void openEditorForNewNote(View view) {
+        Intent intent = new Intent(this, EditorActivity.class);
+        startActivityForResult(intent, EDITOR_REQUEST_CODE);
     }
 }

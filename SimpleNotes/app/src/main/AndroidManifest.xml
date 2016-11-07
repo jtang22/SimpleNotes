@@ -17,10 +17,17 @@
         </activity>
 
         <provider
-            android:authorities="com.example.simplenotes.notesprovider"
             android:name=".NotesProvider"
+            android:authorities="com.example.simplenotes.notesprovider"
             android:exported="false" />
 
+        <activity
+            android:name=".EditorActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.simplenotes.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
