@@ -17,7 +17,7 @@
         </activity>
 
         <provider
-            android:authorities="com.example.plainolnotes.notesprovider"
+            android:authorities="com.example.simplenotes.notesprovider"
             android:name=".NotesProvider"
             android:exported="false" />
 
